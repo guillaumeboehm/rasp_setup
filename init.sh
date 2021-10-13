@@ -30,6 +30,8 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 cp -r ~/rasp_setup/.zshrc ~ || exit
 super chsh -s /bin/zsh ubuntu || exit
 
+cp ~/rasp_setup/.gitconfig ~
+
 #? MongoDB install
 
 # Install the MongoDB 4.4 GPG key:

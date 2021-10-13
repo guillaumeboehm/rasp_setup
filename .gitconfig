@@ -1,0 +1,9 @@
+[user]
+	email = guillaumeboehm@hotmail.fr
+	name = Guillaume BOEHM
+[credential]
+	helper = store
+[core]
+      editor = vim
+[init]
+	defaultBranch = master
