@@ -25,8 +25,9 @@ super apt update && super apt upgrade -y || exit
 #? quality of life stuff
 
 super apt install -y zsh || exit
+cd ~
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || exit
-cp -r .zshrc ~ || exit
+cp -r ~/rasp_setup/.zshrc ~ || exit
 super chsh -s /bin/zsh ubuntu || exit
 
 #? MongoDB install
