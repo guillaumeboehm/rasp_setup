@@ -19,6 +19,7 @@ do
     fi
 done
 
+super dpkg --configure -a
 super apt update && super apt upgrade -y
 
 #? quality of life stuff
