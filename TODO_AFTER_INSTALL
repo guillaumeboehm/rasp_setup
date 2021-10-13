@@ -1,0 +1,21 @@
+##### MongoDB 
+
+> mongo
+to connect to mongosh
+
+# use admin
+# db.createUser( { user: "admin",
+#             pwd: "SUPERSECRETPASSWORD",
+#             roles: [ "userAdminAnyDatabase",
+#                      "dbAdminAnyDatabase",
+#                      "readWriteAnyDatabase"] } )
+# exit
+
+change /etc/mongod.conf for authentication config
+# # These two lines must be uncommented and in the file together:
+# security:
+#    authorization: enabled
+
+restart deamon
+
+
