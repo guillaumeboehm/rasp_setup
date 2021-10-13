@@ -27,7 +27,7 @@ super apt update && super apt upgrade -y || exit
 super apt install -y zsh || exit
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || exit
 cp -r .zshrc ~ || exit
-chsh -s /bin/zsh ubuntu || exit
+super chsh -s /bin/zsh ubuntu || exit
 
 #? MongoDB install
 
