@@ -25,10 +25,10 @@ super apt update && super apt upgrade -y || exit
 #? quality of life stuff
 
 super apt install -y zsh neovim fzf || exit
+cd ~
 git clone https://github.com/guillaumeboehm/linux_new_install || exit
 
 #zsh
-cd ~
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 cd ~/.oh-my-zsh
 while read plug; do
@@ -42,13 +42,14 @@ cp -r ~/rasp_setup/.zshrc ~ || exit
 super chsh -s /bin/zsh ubuntu || exit
 
 #nvim
-mkdir -p .config
-cp -r ~/linux_new_install/.config/nvim/ ~/.config/
-cd ~/.config/nvim
-./update.sh
+cd ~
+mkdir -p .config || exit
+cp -r ~/linux_new_install/.config/nvim/ ~/.config/ || exit
+cd ~/.config/nvim || exit
+./update.sh || exit
 
 #gitconfig
-cp ~/rasp_setup/.gitconfig ~
+cp ~/rasp_setup/.gitconfig ~ || exit
 
 #? MongoDB install
 
@@ -75,4 +76,6 @@ super apt install -y nodejs npm || exit
 
 #? cleanup
 
-super apt autoremove
+super apt autoremove -y || exit
+rm -rf ~/linux_new_install || exit
+rm -rf ~/rasp_setup || exit
