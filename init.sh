@@ -24,7 +24,7 @@ super apt update && super apt upgrade -y || exit
 
 #? quality of life stuff
 
-super apt install -y zsh neovim || exit
+super apt install -y zsh neovim fzf || exit
 git clone https://github.com/guillaumeboehm/linux_new_install || exit
 
 #zsh
@@ -72,3 +72,7 @@ super systemctl start mongod || exit
 #? node stuff
 
 super apt install -y nodejs npm || exit
+
+#? cleanup
+
+super apt autoremove
