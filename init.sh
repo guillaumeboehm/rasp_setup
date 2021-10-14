@@ -24,12 +24,30 @@ super apt update && super apt upgrade -y || exit
 
 #? quality of life stuff
 
-super apt install -y zsh || exit
+super apt install -y zsh neovim || exit
+git clone https://github.com/guillaumeboehm/linux_new_install || exit
+
+#zsh
 cd ~
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+cd ~/.oh-my-zsh
+while read plug; do
+    list=($plug)
+    url=${list[0]}
+    path=${list[1]}
+    echo "add $url to custom/plugins/$path"
+    git submodule add -f $url custom/plugins/$path
+done <<< $(cat ~/linux_new_install/.omz_plugins)
 cp -r ~/rasp_setup/.zshrc ~ || exit
 super chsh -s /bin/zsh ubuntu || exit
 
+#nvim
+mkdir -p .config
+cp -r ~/linux_new_install/.config/nvim/ ~/.config/
+cd ~/.config/nvim
+./update.sh
+
+#gitconfig
 cp ~/rasp_setup/.gitconfig ~
 
 #? MongoDB install

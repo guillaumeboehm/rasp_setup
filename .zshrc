@@ -70,7 +70,7 @@ ZSH_THEME="bira" # set by `omz`
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git aliases archlinux zsh-z command-not-found sudo zsh-autosuggestions zsh-syntax-highlighting colored-man-pages zsh-history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -82,6 +82,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # keybinds setup use "cat > /dev/null" to figure out the codes
+bindkey "^[Od" backward-word
+bindkey "^[Oc" forward-word
+bindkey -r '\e\e'
+bindkey '^[' undo
+bindkey "^[s" sudo-command-line
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -91,6 +96,10 @@ source $ZSH/oh-my-zsh.sh
 # fi
 
 # Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# Plugins configuration
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -100,8 +109,15 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias vim=nvim
+alias vi=nvim
+export EDITOR=nvim
+alias less='/usr/share/nvim/runtime/macros/less.sh'
+alias zv='~/.config/nvim/z-vim.sh'
 
-export TERM=xterm-color
+alias vf='nvim \$(find \$(pwd) | fzf --algo=v1)'
+
+alias ggmom='git push origin HEAD:\$(git_main_branch)'
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
