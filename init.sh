@@ -24,9 +24,11 @@ super apt update && super apt upgrade -y || exit
 
 #? quality of life stuff
 
-super apt install -y zsh neovim fzf || exit
+super apt install -y zsh neovim fzf pip || exit
 cd ~
 git clone https://github.com/guillaumeboehm/linux_new_install || exit
+cd linux_new_install
+git checkout wm
 
 #zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -41,6 +43,10 @@ done <<< $(cat ~/linux_new_install/.omz_plugins)
 cp -r ~/rasp_setup/.zshrc ~ || exit
 super chsh -s /bin/zsh ubuntu || exit
 
+#golang needed for hexokinase
+super apt install golang-go -y
+# super true # just to use sudo on the next lines
+# wget -c https://golang.org/dl/go1.17.2.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local
 #nvim
 cd ~
 mkdir -p .config || exit

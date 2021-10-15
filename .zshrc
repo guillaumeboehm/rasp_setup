@@ -101,6 +101,8 @@ bindkey "^[s" sudo-command-line
 # Plugins configuration
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
+export PATH=$PATH:/usr/local/go/bin
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -122,6 +124,7 @@ alias ggmom='git push origin HEAD:\$(git_main_branch)'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
+export TERM=xterm-color
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
