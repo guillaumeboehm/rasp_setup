@@ -24,7 +24,7 @@ super apt update && super apt upgrade -y || exit
 
 #? quality of life stuff
 
-super apt install -y zsh neovim fzf pip || exit
+super apt install -y zsh neovim fzf pip python-is-python3 || exit
 cd ~
 git clone https://github.com/guillaumeboehm/linux_new_install || exit
 cd linux_new_install
