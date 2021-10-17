@@ -80,6 +80,9 @@ super systemctl start mongod || exit
 
 super apt install -y nodejs npm || exit
 
+#? Follow up stuff
+cp ~/rasp_setup/TODO_AFTER_INSTALL ~/
+
 #? cleanup
 
 super apt autoremove -y || exit
