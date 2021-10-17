@@ -23,7 +23,6 @@ super dpkg --configure -a || exit
 super apt update && super apt upgrade -y || exit
 
 #? quality of life stuff
-
 super apt install -y zsh neovim fzf pip python-is-python3 || exit
 cd ~
 git clone https://github.com/guillaumeboehm/linux_new_install || exit
@@ -58,7 +57,6 @@ cd ~/.config/nvim || exit
 cp ~/rasp_setup/.gitconfig ~ || exit
 
 #? MongoDB install
-
 # Install the MongoDB 4.4 GPG key:
 super true # just to use sudo on the next lines
 wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
@@ -77,14 +75,19 @@ super systemctl enable mongod || exit
 super systemctl start mongod || exit
 
 #? node stuff
+super apt install -y npm || exit
+super npm install -g n@latest
+super n lts
 
-super apt install -y nodejs npm || exit
+#? tmux stuff
+cp -r ~/rasp_setup/.tmux.conf ~/
+cp -r ~/rasp_setup/.tmux/ ~/ #copies the plugin manager
+
 
 #? Follow up stuff
 cp ~/rasp_setup/TODO_AFTER_INSTALL ~/
 
 #? cleanup
-
 super apt autoremove -y || exit
 rm -rf ~/linux_new_install || exit
 rm -rf ~/rasp_setup || exit

@@ -11,6 +11,12 @@ to connect to mongosh
 #                      "readWriteAnyDatabase"] } )
 # exit
 
+# use memosync
+# db.createUser( { user: "memosync",
+#             pwd: "PASS",
+#             roles: ["readWrite"] } )
+# exit
+
 change /etc/mongod.conf for authentication config
 # # These two lines must be uncommented and in the file together:
 # security:
@@ -18,4 +24,4 @@ change /etc/mongod.conf for authentication config
 
 restart deamon
 
-
+Init tmux plugins with prefix + I
