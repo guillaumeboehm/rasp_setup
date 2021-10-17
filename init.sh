@@ -80,8 +80,8 @@ super npm install -g n@latest
 super n lts
 
 #? tmux stuff
-cp -r ~/rasp_setup/.tmux.conf ~/
-cp -r ~/rasp_setup/.tmux/ ~/ #copies the plugin manager
+cp -r ~/linux_new_install/.tmux.conf ~/
+cp -r ~/linux_new_install/.tmux/ ~/ #copies the plugin manager
 
 
 #? Follow up stuff
