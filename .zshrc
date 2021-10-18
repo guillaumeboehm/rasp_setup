@@ -123,6 +123,7 @@ alias ggmom='git push origin HEAD:\$(git_main_branch)'
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+alias t='tmux attach'
 
 export TERM=screen-256color
 # set a fancy prompt (non-color, unless we know we "want" color)
