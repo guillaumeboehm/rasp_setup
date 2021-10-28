@@ -25,3 +25,11 @@ change /etc/mongod.conf for authentication config
 restart deamon
 
 Init tmux plugins with prefix + I
+
+##### MemoSync
+
+clone memosync
+pm2 startup
+pm2 start ecosystem
+pm2 save
+pm2 monit

@@ -75,16 +75,22 @@ super systemctl enable mongod || exit
 super systemctl start mongod || exit
 
 #? node stuff
-super apt install -y npm nginx || exit
+super apt install -y npm || exit
 super npm install -g n@latest
 super n lts
-super systemctl enable nginx
-super systemctl start nginx
-super ufw enable
-super ufw allow 80/tcp
-super ufw allow 443/tcp
-super ufw allow 22/tcp
-super ufw reload
+super npm install nodemon pm2 -g
+
+#? nginx stuff
+super apt install -y nginx || exit
+super systemctl enable nginx || exit
+super systemctl start nginx || exit
+super ufw enable || exit
+super ufw allow 80/tcp || exit
+super ufw allow 443/tcp || exit
+super ufw allow 22/tcp || exit
+super ufw reload || exit
+super cp -r ~/rasp_setup/sites-available /etc/nginx
+super ln -sf /etc/nginx/sites-available/* /etc/nginx/sites-enable/
 
 #? tmux stuff
 cp -r ~/linux_new_install/.tmux.conf ~/
