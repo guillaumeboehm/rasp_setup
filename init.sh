@@ -75,9 +75,16 @@ super systemctl enable mongod || exit
 super systemctl start mongod || exit
 
 #? node stuff
-super apt install -y npm || exit
+super apt install -y npm nginx || exit
 super npm install -g n@latest
 super n lts
+super systemctl enable nginx
+super systemctl start nginx
+super ufw enable
+super ufw allow 80/tcp
+super ufw allow 443/tcp
+super ufw allow 22/tcp
+super ufw reload
 
 #? tmux stuff
 cp -r ~/linux_new_install/.tmux.conf ~/
