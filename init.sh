@@ -85,12 +85,13 @@ super apt install -y nginx || exit
 super systemctl enable nginx || exit
 super systemctl start nginx || exit
 super ufw enable || exit
+super ufw default deny || exit
 super ufw allow 80/tcp || exit
 super ufw allow 443/tcp || exit
 super ufw allow 22/tcp || exit
 super ufw reload || exit
 super cp -r ~/rasp_setup/sites-available /etc/nginx
-super ln -sf /etc/nginx/sites-available/* /etc/nginx/sites-enable/
+super ln -sf /etc/nginx/sites-available/* /etc/nginx/sites-enabled/
 
 #? tmux stuff
 cp -r ~/linux_new_install/.tmux.conf ~/
