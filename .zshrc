@@ -1,129 +1,100 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export ZSH_HOME="/home/yoro/.config/zsh"
 
-# Path to your oh-my-zsh installation.
-export ZSH="/home/ubuntu/.oh-my-zsh"
+# plugins
+export ZPLUG_HOME=$ZSH_HOME/zplug
+source $ZPLUG_HOME/init.zsh
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="bira" # set by `omz`
+zplug "plugins/aliases", from:oh-my-zsh
+zplug "agkozak/zsh-z"
+zplug "plugins/command-not-found", from:oh-my-zsh
+zplug "plugins/sudo", from:oh-my-zsh
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "plugins/colored-man-pages", from:oh-my-zsh
+zplug "zsh-users/zsh-history-substring-search"
+zplug "plugins/thefuck", from:oh-my-zsh
+zplug "MichaelAquilina/zsh-you-should-use"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+ZSH_THEME="strug"
+zplug "themes/$ZSH_THEME", from:oh-my-zsh, as:theme
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
-# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git aliases archlinux zsh-z command-not-found sudo zsh-autosuggestions zsh-syntax-highlighting colored-man-pages zsh-history-substring-search)
-
-source $ZSH/oh-my-zsh.sh
+zplug check || zplug install
+zplug load
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
+export EDITOR=nvim
+export PATH=$PATH:/usr/local/go/bin
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Plugins configuration
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+# completion system styling
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git svn hg
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' formats "%{$fg[yellow]%}%c%{$fg[green]%}%u%{$reset_color%} [%{$fg[blue]%}%b%{$reset_color%}] %{$fg[yellow]%}%s%{$reset_color%}:%r"
+
+autoload -U compinit; compinit
+zmodload -i zsh/complist        
+setopt hash_list_all            # hash everything before completion
+setopt completealiases          # complete alisases
+setopt always_to_end            # when completing from the middle of a word, move the cursor to the end of the word    
+setopt complete_in_word         # allow completion from within a word/phrase
+setopt correct                  # spelling correction for commands
+setopt list_ambiguous           # complete as much of a completion until it gets ambiguous.
+
+zstyle ':completion::complete:*' use-cache on               # completion caching, use rehash to clear
+zstyle ':completion:*' cache-path ~/.config/zsh/cache              # cache path
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # ignore case
+zstyle ':completion:*' menu select
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}       # colorz !
+zstyle ':completion:*::::' completer _expand _complete _ignored _approximate # list of completers to use
+
+# sections completion !
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format '%F{green}-- %d --%f'
+zstyle ':completion:*:messages' format '%F{purple}-- %d --%f'
+zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:manuals' separate-sections true
+
+zstyle ':completion:*:processes' command 'ps -au$USER'
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*' force-list always
+zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=29=34"
+zstyle ':completion:*:*:killall:*' menu yes select
+zstyle ':completion:*:killall:*' force-list always
+users=(yoro root)
+zstyle ':completion:*' users $users
+
+#generic completion with --help
+compdef _gnu_generic gcc
+compdef _gnu_generic gdb
 
 # keybinds setup use "cat > /dev/null" to figure out the codes
 bindkey "^[Od" backward-word
 bindkey "^[Oc" forward-word
 bindkey -r '\e\e'
-bindkey '^[' undo
+# bindkey '^[' undo
 bindkey "^[s" sudo-command-line
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+# Use vim keys in tab complete menu
+bindkey -M menuselect 'h' backward-char
+bindkey -M menuselect 'j' down-line-or-history
+bindkey -M menuselect 'k' up-line-or-history
+bindkey -M menuselect 'l' forward-char
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+if command -v rbenv; then
+    eval "$(rbenv init -)"
+fi
 
-# Plugins configuration
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+source ~/.aliasesrc
 
-export PATH=$PATH:/usr/local/go/bin
+precmd () {print -Pn "\e]0;%~\a"}
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vim=nvim
-alias vi=nvim
-export EDITOR=nvim
-alias less='/usr/share/nvim/runtime/macros/less.sh'
-alias zv='~/.config/nvim/z-vim.sh'
-
-alias vf='nvim \$(find \$(pwd) | fzf --algo=v1)'
-
-alias ggmom='git push origin HEAD:\$(git_main_branch)'
-
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias t='tmux new-session -A -s main'
+alias bat='batcat'
 
 export TERM=screen-256color
 # set a fancy prompt (non-color, unless we know we "want" color)

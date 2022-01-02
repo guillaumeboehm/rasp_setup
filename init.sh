@@ -30,15 +30,20 @@ cd linux_new_install
 git checkout wm
 
 #zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-cd ~/.oh-my-zsh
-while read plug; do
-    list=($plug)
-    url=${list[0]}
-    path=${list[1]}
-    echo "add $url to custom/plugins/$path"
-    git submodule add -f $url custom/plugins/$path
-done <<< $(cat ~/linux_new_install/.omz_plugins)
+# sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+# cd ~/.oh-my-zsh
+# while read plug; do
+#     list=($plug)
+#     url=${list[0]}
+#     path=${list[1]}
+#     echo "add $url to custom/plugins/$path"
+#     git submodule add -f $url custom/plugins/$path
+# done <<< $(cat ~/linux_new_install/.omz_plugins)
+mkdir -p $HOME/.config/zsh
+export ZSH_HOME=$HOME/.config/zsh
+export ZPLUG_HOME=$ZSH_HOME/zplug
+git clone https://github.com/zplug/zplug $ZPLUG_HOME
+
 cp -r ~/rasp_setup/.zshrc ~ || exit
 super chsh -s /bin/zsh ubuntu || exit
 
