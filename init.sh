@@ -94,14 +94,20 @@ super ufw default deny || exit
 super ufw allow 80/tcp || exit
 super ufw allow 443/tcp || exit
 super ufw allow 22/tcp || exit
-super ufw reload || exit
 super cp -r ~/rasp_setup/sites-available /etc/nginx
 super ln -sf /etc/nginx/sites-available/* /etc/nginx/sites-enabled/
+
+#? netdata stuff
+bash <(curl -Ss https://my-netdata.io/kickstart.sh) --stable-channel --disable-telemetry
+sudo sed -i 's/# allow dashboard from = localhost */allow dashboard from = localhost 192.168.*/' /etc/netdata/netdata.conf || exit
+sudo ufw allow 19999 || exit
 
 #? tmux stuff
 cp -r ~/linux_new_install/.tmux.conf ~/
 cp -r ~/linux_new_install/.tmux/ ~/ #copies the plugin manager
 
+#? reloading stuff
+super ufw reload || exit
 
 #? Follow up stuff
 cp ~/rasp_setup/TODO_AFTER_INSTALL ~/
